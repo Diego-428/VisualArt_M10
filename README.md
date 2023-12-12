@@ -16,5 +16,5 @@ This project was an opportunity to enjoy my interest in computational geometry. 
 This project was especially challenging to me because of the thinking that goes behind maintaining an unlimited number of objects. Storing objects while working and manipulating the attributes of each one in addition to simplifying all this while keeping a crisp frame count is key for making this program run smoothly.
 
 ## Sample
-
+![Drag Racing](Dragster.jpg)
 
