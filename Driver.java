@@ -1,4 +1,3 @@
-//Ball ball = new Ball(50, 50, 30, 5, 3, 10, 10, 10);
 List<Ball> storage = new ArrayList();
 // frame size
 final int frameLength = 500;
@@ -26,9 +25,12 @@ void draw() {
 		ball.setX(ball.x + ball.xSpeed);
 		ball.setY(ball.y + ball.ySpeed);
 		// Bounce off walls
+		if( isColliding(ball) ){
+			ball.setXSpeed(ball.xSpeed * -1);
+			ball.setYSpeed(ball.ySpeed * -1);
+		}
 		if (ball.x < 0 || ball.x > frameWidth) {
 			ball.setXSpeed(ball.xSpeed * -1);
-			ball.setDiameter(ball.diameter);
 			ball.changeColor();
 			currentColorCombination = newRGB();
 			background(currentColorCombination[0], currentColorCombination[1],
@@ -36,7 +38,6 @@ void draw() {
 		}
 		if (ball.y < 0 || ball.y > frameLength) {
 			ball.setYSpeed(ball.ySpeed * -1);
-			ball.setDiameter(ball.diameter);
 			ball.changeColor();
 			currentColorCombination = newRGB();
 			background(currentColorCombination[0], currentColorCombination[1],
@@ -52,7 +53,6 @@ void draw() {
 			display(ball);
 		}	
 	}
-
 }
 
 void display(currentBall) {
@@ -73,8 +73,22 @@ void display(currentBall) {
   }
 }
 
+// Function to check collision between two circles
+boolean isColliding(Ball ball) {
+	for(int i = 0; i < storage.size(); i++ ){
+		Ball currentBall = storage.get(i);
+		if( ball != currentBall ){
+			float distance = dist(ball.x, ball.y, currentBall.x, currentBall.y);
+			if ( distance <= ((ball.diameter / 2) + (currentBall.diameter / 2)) ){
+					return true;
+			}			
+		}
+	}
+	return false;
+}
+
 void mouseClicked(){
-	storage.add( new Ball( mouseX, mouseY, 10, 5, 3, 10, 10, 10) );
+	storage.add( new Ball( mouseX, mouseY, 5, 5, 3, 10, 10, 10) );
 }
 
 int[] newRGB(){
