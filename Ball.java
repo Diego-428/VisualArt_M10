@@ -9,6 +9,8 @@ class Ball{
 	private float myRed;
 	private float myGreen;
 	private float myBlue;
+	int[] positionXTracker;
+	int[] positionYTracker;
 	// constructor
 	public Ball(int x, int y, int diameter, int xSpeed, int ySpeed,
 						 float red, float blue, float green){
@@ -20,6 +22,8 @@ class Ball{
 		this.myRed = red;
 		this.myBlue = blue;
 		this.myGreen = green;
+		positionXTracker = new int[frameLimit];
+		positionYTracker = new int[frameLimit];
 	}
 	
 	public void changeColor(){

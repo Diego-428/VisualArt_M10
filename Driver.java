@@ -1,11 +1,13 @@
-Ball ball = new Ball(50, 50, 30, 5, 3, 10, 10, 10);
+//Ball ball = new Ball(50, 50, 30, 5, 3, 10, 10, 10);
+List<Ball> storage = new ArrayList();
 // frame size
 final int frameLength = 500;
 final int frameWidth = 500;
 // variables for position tracking
 final int frameLimit = 60;
-int[] positionXTracker = new int[frameLimit];
-int[] positionYTracker = new int[frameLimit];
+// speed in which the balls move
+int velocityX = 5;
+int velocityY = 3;
 // keep track of the current backgorund color, used to omit the trail of balls drawn
 int[] currentColorCombination = new int[3];
 
@@ -18,28 +20,39 @@ void setup() {
 void draw() { 
 	background(currentColorCombination[0], currentColorCombination[1],
 						 currentColorCombination[2]);
-  // Update ball position
-  ball.setX(ball.x + ball.xSpeed);
-  ball.setY(ball.y + ball.ySpeed);
-  // Bounce off walls
-  if (ball.x < 0 || ball.x > frameWidth) {
-    ball.setXSpeed(ball.xSpeed * -1);
-		ball.setDiameter(ball.diameter);
-		ball.changeColor();
-		currentColorCombination = newRGB();
-		background(currentColorCombination[0], currentColorCombination[1],
-							 currentColorCombination[2]);
-  }
-  if (ball.y < 0 || ball.y > frameLength) {
-    ball.setYSpeed(ball.ySpeed * -1);
-		ball.setDiameter(ball.diameter);
-		ball.changeColor();
-		currentColorCombination = newRGB();
-		background(currentColorCombination[0], currentColorCombination[1],
-							 currentColorCombination[2]);
-  }
-  // Draw the bouncing ball
-  display(ball);
+	for( int i = 0; i < storage.size(); i++ ){
+		Ball ball = storage.get(i);
+		// Update ball position
+		ball.setX(ball.x + ball.xSpeed);
+		ball.setY(ball.y + ball.ySpeed);
+		// Bounce off walls
+		if (ball.x < 0 || ball.x > frameWidth) {
+			ball.setXSpeed(ball.xSpeed * -1);
+			ball.setDiameter(ball.diameter);
+			ball.changeColor();
+			currentColorCombination = newRGB();
+			background(currentColorCombination[0], currentColorCombination[1],
+								 currentColorCombination[2]);
+		}
+		if (ball.y < 0 || ball.y > frameLength) {
+			ball.setYSpeed(ball.ySpeed * -1);
+			ball.setDiameter(ball.diameter);
+			ball.changeColor();
+			currentColorCombination = newRGB();
+			background(currentColorCombination[0], currentColorCombination[1],
+								 currentColorCombination[2]);
+		}
+		if( keyCode == UP ){
+			ball.xSpeed = 0;
+			ball.ySpeed = 0;
+			display(ball);
+		}
+		else{
+			// Draw the bouncing ball
+			display(ball);
+		}	
+	}
+
 }
 
 void display(currentBall) {
@@ -50,14 +63,18 @@ void display(currentBall) {
   // Cycle through the array, using a different entry on each frame. 
   // Using % to circulate and recycle through array values
   int trailingBallPosition = frameCount % frameLimit;
-  positionXTracker[trailingBallPosition] = currentBall.x;
-  positionYTracker[trailingBallPosition] = currentBall.y;
+  currentBall.positionXTracker[trailingBallPosition] = currentBall.x;
+  currentBall.positionYTracker[trailingBallPosition] = currentBall.y;
   // render the ball trail of varying size
   for (int i = 0; i < frameLimit; i++) {
     // trailingBallPosition+1 is the smallest (the oldest in the array)
     int index = (trailingBallPosition+1 + i) % frameLimit;
-    ellipse(positionXTracker[index], positionYTracker[index], i, i);
+    ellipse(currentBall.positionXTracker[index], currentBall.positionYTracker[index], i, i);
   }
+}
+
+void mouseClicked(){
+	storage.add( new Ball( mouseX, mouseY, 10, 5, 3, 10, 10, 10) );
 }
 
 int[] newRGB(){
