@@ -1,4 +1,4 @@
-# Diego's Obstacle World
+# Bouncy Storm
 
 ## How to Run
 This program cannot be run on any IDE. It has to be run on the web editor [open processing](openprocessing.org/). This repository simply serves as a reference to copy and paste the source code to this web editor.
