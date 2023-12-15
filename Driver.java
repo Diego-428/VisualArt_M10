@@ -1,10 +1,15 @@
+/*
+Diego Torres-Ramos
+CSCI 3725
+This driver file dictates how user input is handled at every frame.
+It also handles the ball bounce and color changes.
+*/
 List<Ball> storage = new ArrayList();
 // frame size
 final int frameLength = 500;
 final int frameWidth = 500;
 // variables for position tracking
 final int frameLimit = 60;
-int vel = 1;
 // speed in which the balls move
 int velocityX = 5;
 int velocityY = 3;
@@ -17,39 +22,39 @@ void setup() {
   background(0, 0, 0, 2);
 }
 
+// called at every frame
 void draw() { 
-	// resetting the backgorund at every frame prevents the balls from leaving a trail everywhere it goes
 	background(currentColorCombination[0], currentColorCombination[1],
 						 currentColorCombination[2]);
-	// render all the balls at the same time
 	for( int i = 0; i < storage.size(); i++ ){
 		Ball ball = storage.get(i);
 		// Update ball position
-		ball.setX(ball.x + ball.xSpeed * vel);
-		ball.setY(ball.y + ball.ySpeed * vel);
-		// Bounce off of each other
+		ball.setX(ball.x + ball.xSpeed);
+		ball.setY(ball.y + ball.ySpeed);
+		// Bounce off walls
 		if( isColliding(ball) ){
 			ball.setXSpeed(ball.xSpeed * -1);
 			ball.setYSpeed(ball.ySpeed * -1);
 		}
-		// check if ball hit the left or right wall, if so then bounce
+		// bounce off left or right wall
 		if (ball.x < 0 || ball.x > frameWidth) {
-			ball.setXSpeed(ball.xSpeed * -1 * vel);
+			ball.setXSpeed(ball.xSpeed * -1);
 			ball.changeColor();
 			currentColorCombination = newRGB();
 			background(currentColorCombination[0], currentColorCombination[1],
 								 currentColorCombination[2]);
 		}
-		// check if ball hit the top or bottom wall, if so then bounce
+		// bounce off top or bottom wall
 		if (ball.y < 0 || ball.y > frameLength) {
-			ball.setYSpeed(ball.ySpeed * -1 * vel);
+			ball.setYSpeed(ball.ySpeed * -1);
 			ball.changeColor();
 			currentColorCombination = newRGB();
 			background(currentColorCombination[0], currentColorCombination[1],
 								 currentColorCombination[2]);
 		}
 		if( keyCode == UP ){
-			vel = 0;
+			ball.xSpeed = 0;
+			ball.ySpeed = 0;
 			display(ball);
 		}
 		else{
@@ -91,12 +96,11 @@ boolean isColliding(Ball ball) {
 	return false;
 }
 
-// create a new ball wherever the mouse clicks
+// spawns a new ball wherever the mouse is clicked
 void mouseClicked(){
 	storage.add( new Ball( mouseX, mouseY, 5, 5, 3, 10, 10, 10) );
 }
 
-// generate a new color for the ball
 int[] newRGB(){
 	// return a random color (as a list)
 	return new int[3] {random(255), random(255), random(255)};
