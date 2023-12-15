@@ -1,16 +1,28 @@
+/*
+Name: Diego Torres-Ramos
+CSCI 3725
+Ball class defines a the circle that moves and bounces around the screen.
+It consists of attributes that defines its traits like diameter and current location.
+Another trait it has is red, green, and blue color palette to generate a random 
+color for the ball when it bounces off the walls.
+*/
 class Ball{
-	// attributes
+	// x and y are the object's current coordinates
   int x;
   int y;
+	// diameter is the objects size
   int diameter;
+	// velocity the in which the object moves
   int xSpeed;
   int ySpeed;
 	// How much red, green, and blue this Bubble has.
 	private float myRed;
 	private float myGreen;
 	private float myBlue;
+	// used for rendering the fading trail
 	int[] positionXTracker;
 	int[] positionYTracker;
+	
 	// constructor
 	public Ball(int x, int y, int diameter, int xSpeed, int ySpeed,
 						 float red, float blue, float green){
@@ -26,6 +38,7 @@ class Ball{
 		positionYTracker = new int[frameLimit];
 	}
 	
+	// method used for redefining the ball color
 	public void changeColor(){
 		myRed = random(0,255);
 		myBlue = random(0,255);
