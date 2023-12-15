@@ -15,6 +15,9 @@ This project was an opportunity to enjoy my interest in computational geometry. 
 ## Challenges
 This project was especially challenging to me because of the thinking that goes behind maintaining an unlimited number of objects. Storing objects while working and manipulating the attributes of each one in addition to simplifying all this while keeping a crisp frame count is key for making this program run smoothly.
 
+## Trail Reference
+[inspiration for making the trail reference](https://processing.org/examples/storinginput.html)
+
 ## Sample
 ![](https://github.com/Diego-428/VisualArt_M10/blob/main/sample/M10-Sample2.png)
 
